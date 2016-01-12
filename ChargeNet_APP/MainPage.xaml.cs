@@ -31,7 +31,7 @@ namespace ChargeNet_APP
         IsolatedStorageFile myIsolatedStorage = IsolatedStorageFile.GetUserStoreForApplication();
         String filename = "offlinedata.txt";
         bool isJsonloaded = false;
-        
+        //offline data loading not working 
         public void loadData()
         {
 
