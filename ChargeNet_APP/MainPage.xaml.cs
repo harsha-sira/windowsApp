@@ -109,7 +109,7 @@ namespace ChargeNet_APP
                
                 var list = JsonConvert.DeserializeObject<List<Location>>(e.Result);
                 string jsonCache = JsonConvert.SerializeObject(list);
-                
+                Debug.WriteLine(jsonCache);
                 //writing to offlinedata.txt for caching 
                 if(myIsolatedStorage.FileExists(filename)){
                     
