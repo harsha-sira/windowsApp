@@ -27,13 +27,29 @@ namespace ChargeNet_APP
 {
     public partial class MapPage : PhoneApplicationPage
     {
+        Uri imagebusy = new Uri("/images/level-2-busy-marker-pin.png", UriKind.RelativeOrAbsolute);
+        Uri imagefree = new Uri("/images/level-2-free-marker-pin.png", UriKind.RelativeOrAbsolute);
+        Uri imageSuperfree = new Uri("/images/super-charger-free-marker-pin.png", UriKind.RelativeOrAbsolute);
+        Uri imageSuperbusy = new Uri("/images/super-charger-busy-marker-pin.png", UriKind.RelativeOrAbsolute);
+        Uri imageplug = new Uri("/images/plug.png", UriKind.RelativeOrAbsolute);
+
         bool socetesON = false;
+        bool fastchargersOn = true;
+        bool normalChargersOn = true;
+
         int[] soctetNumArray = new int[100];
+        int[] fastChargersNumArray = new int[100];
+        int[] normalChargersNumArray = new int[100];
+
         int numberOfSocets =0 ;
+        int numberOfSuperChargers = 0;
+        int numberOfNormalChargers = 0;
+
         bool pushtapped = false;
         MapOverlay[] mapOverlay = new MapOverlay[100];
         MapLayer myLayer = new MapLayer();
-        Popup p = new Popup();
+        Pushpin p = new Pushpin();
+
         double longitudeRecieved, latitudeRecieved;
         bool isConnected = NetworkInterface.GetIsNetworkAvailable();
         
@@ -61,9 +77,7 @@ namespace ChargeNet_APP
         }
 
         public void socketsprint()
-        {
-            Uri imageplug = new Uri("/images/plug.png", UriKind.RelativeOrAbsolute);
-            
+        {       
             for (int i = 0; i < numberOfSocets; i++)
             {
                 var image = new Image();
@@ -84,15 +98,71 @@ namespace ChargeNet_APP
             }
         }
 
+        public void showNormalChargeers()
+        {
+            for (int i = 0; i < numberOfNormalChargers; i++)
+            {
+                var image = new Image();
+                image.Width = 50;
+                image.Height = 50;
+                image.Opacity = 100;
+                if (MainPage.array[normalChargersNumArray[i], 1].Equals("FREE NORMAL"))
+                {
+                    image.Source = new BitmapImage(imagefree);
+                }
+                else
+                {
+                    image.Source = new BitmapImage(imagebusy);
+                }
+                
+                image.Name = MainPage.array[normalChargersNumArray[i], 2] + "\n" + MainPage.array[normalChargersNumArray[i], 0];
+                image.Tap += pushtap_Tap;
+                mapOverlay[normalChargersNumArray[i]] = new MapOverlay();
+                mapOverlay[normalChargersNumArray[i]].Content = image;
+                mapOverlay[normalChargersNumArray[i]].GeoCoordinate = new GeoCoordinate(Double.Parse(MainPage.array[normalChargersNumArray[i], 4]), Double.Parse(MainPage.array[normalChargersNumArray[i], 3]));
+                mapOverlay[normalChargersNumArray[i]].PositionOrigin = new Point(0, 1);
+
+
+                myLayer.Add(mapOverlay[normalChargersNumArray[i]]);
+
+            }
+        }
+
+        public void showFastChargers()
+        {
+            for (int i = 0; i < numberOfSuperChargers; i++)
+            {
+                var image = new Image();
+                image.Width = 50;
+                image.Height = 50;
+                image.Opacity = 100;
+                if (MainPage.array[fastChargersNumArray[i], 1].Equals("FREE FAST"))
+                {
+                    image.Source = new BitmapImage(imageSuperfree);
+                }
+                else
+                {
+                    image.Source = new BitmapImage(imageSuperbusy);
+                }
+
+                image.Name = MainPage.array[fastChargersNumArray[i], 2] + "\n" + MainPage.array[fastChargersNumArray[i], 0];
+                image.Tap += pushtap_Tap;
+                mapOverlay[fastChargersNumArray[i]] = new MapOverlay();
+                mapOverlay[fastChargersNumArray[i]].Content = image;
+                mapOverlay[fastChargersNumArray[i]].GeoCoordinate = new GeoCoordinate(Double.Parse(MainPage.array[fastChargersNumArray[i], 4]), Double.Parse(MainPage.array[fastChargersNumArray[i], 3]));
+                mapOverlay[fastChargersNumArray[i]].PositionOrigin = new Point(0, 1);
+
+
+                myLayer.Add(mapOverlay[fastChargersNumArray[i]]);
+
+            }
+        }
         public void loadLocationOnMap()
         {
             
             int numberOfLocations= MainPage.num;
           
-            Uri imagebusy =new Uri("/images/level-2-busy-marker-pin.png", UriKind.RelativeOrAbsolute) ;
-            Uri imagefree =new Uri("/images/level-2-free-marker-pin.png", UriKind.RelativeOrAbsolute) ;
-            Uri imageSuperfree = new Uri("/images/super-charger-free-marker-pin.png",UriKind.RelativeOrAbsolute);
-            Uri imageSuperbusy = new Uri("/images/super-charger-busy-marker-pin.png", UriKind.RelativeOrAbsolute);
+           
             
             for (int i = 0; i < numberOfLocations; i++)
             {
@@ -100,44 +170,33 @@ namespace ChargeNet_APP
                 
                 if (MainPage.array[i, 1].Equals("FREE NORMAL"))
                 {
-                    a = new BitmapImage(imagefree);
+                    normalChargersNumArray[numberOfNormalChargers++] = i;
+                    continue;
+
                 }else if(MainPage.array[i,1].Equals("FREE FAST")){
-                    a = new BitmapImage(imageSuperfree);
+                    fastChargersNumArray[numberOfSuperChargers++] = i;
+                    continue;
                 }
                 else if (MainPage.array[i, 1].Equals("CHARGING FAST"))
                 {
-                    a = new BitmapImage(imageSuperbusy);
+                    fastChargersNumArray[numberOfSuperChargers++] = i;
+                    continue;
                 }
                 else if (MainPage.array[i, 1].Equals("CHARGING NORMAL"))
                 {
-                    a = new BitmapImage(imagebusy);
+                    normalChargersNumArray[numberOfNormalChargers++] = i;
+                    continue;
                 }
                 else
                 {
                     soctetNumArray[numberOfSocets++] = i ;
                     continue;
-
                 }
-
-                var image = new Image();
-                image.Width = 50;
-                image.Height = 50;
-                image.Opacity = 100;
-                image.Source = a;
-                image.Name = MainPage.array[i, 2]+"\n"+MainPage.array[i,0];
-
-                image.Tap += pushtap_Tap;
-                mapOverlay[i] = new MapOverlay();
-                
-                mapOverlay[i].Content = image;
-                mapOverlay[i].GeoCoordinate = new GeoCoordinate(Double.Parse(MainPage.array[i,4]),Double.Parse(MainPage.array[i,3]));
-                mapOverlay[i].PositionOrigin = new Point(0, 1);
-                
-                myLayer.Add(mapOverlay[i]); 
-             
 
             }
             mapWithMyLocation.Layers.Add(myLayer);
+            showFastChargers();
+            showNormalChargeers();
         }
 
         public void pushtap_Tap(object sender, System.Windows.Input.GestureEventArgs e)
@@ -152,6 +211,22 @@ namespace ChargeNet_APP
             for (int i = 0; i < numberOfSocets; i++)
             {
                 myLayer.Remove(mapOverlay[soctetNumArray[i]]);
+            }
+        }
+
+        public void removeFastChargers()
+        {
+            for (int i = 0; i < numberOfSuperChargers; i++)
+            {
+                myLayer.Remove(mapOverlay[fastChargersNumArray[i]]);
+            }
+        }
+
+        public void removeNormalChargers()
+        {
+            for (int i = 0; i < numberOfNormalChargers; i++)
+            {
+                myLayer.Remove(mapOverlay[normalChargersNumArray[i]]);
             }
         }
 
@@ -182,19 +257,15 @@ namespace ChargeNet_APP
 
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-
             if (!socetesON)
             {
                 socketsprint();
                 socetesON = true;
-            }
-            
-                
+            }       
         }
 
         void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-           
+        {  
             if (socetesON)
             {
                 removeSockets();
@@ -202,15 +273,41 @@ namespace ChargeNet_APP
             }
         }
 
-        private void mapWithMyLocation_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        private void fastChargers_Checked(object sender, RoutedEventArgs e)
         {
-            if (pushtapped)
+            if (!fastchargersOn)
             {
-                p.IsOpen = false;
+                showFastChargers();
+                fastchargersOn = true;
             }
-            
         }
 
+        void fastChargers_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (fastchargersOn)
+            {
+                removeFastChargers();
+                fastchargersOn = false;
+            }
+        }
+
+        private void normalChargers_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!normalChargersOn)
+            {
+                showNormalChargeers();
+                normalChargersOn = true;
+            }
+        }
+
+        void normalChargers_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (normalChargersOn)
+            {
+                removeNormalChargers();
+                normalChargersOn = false;
+            }
+        }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             string strCode = string.Empty;

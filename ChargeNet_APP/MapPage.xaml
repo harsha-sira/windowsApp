@@ -42,12 +42,13 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
 
            
-            <maps:Map x:Name="mapWithMyLocation"  Center=" 6.929267,79.861156"  Margin="-13,-28,-15,0" ZoomLevel="10" Tap="mapWithMyLocation_Tap" >
+            <maps:Map x:Name="mapWithMyLocation"  Center=" 6.929267,79.861156"  Margin="-13,-28,-15,0" ZoomLevel="10"  >
                 
             </maps:Map>
-           
 
-            <ToggleButton x:Name="toggle" Content="SOCKETS" Margin="-13,594,303,0" Background="LightBlue"  Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"/>
+            <ToggleButton x:Name="toggleSockets" Content="SOCKETS" Margin="-13,611,303,0" Background="LightBlue"  Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="166"/>
+            <ToggleButton x:Name="toggleFast" Content="FAST" Margin="-13,564,303,47" Background="LightBlue" Unchecked="fastChargers_Unchecked" IsChecked="True" Checked="fastChargers_Checked"/>
+            <ToggleButton x:Name="toggleNormal" Content="NORMAL" Margin="-13,508,303,94" Background="LightBlue"  Checked="normalChargers_Checked" Unchecked="normalChargers_Unchecked" IsChecked="True"/>
         </Grid>
         
         <!--ContentPanel - place additional content here-->
