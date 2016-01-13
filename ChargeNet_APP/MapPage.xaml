@@ -21,15 +21,15 @@
     xmlns:local="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps">
 
     <phone:PhoneApplicationPage.Resources>
-       
+
     </phone:PhoneApplicationPage.Resources>
-    
-<!--LayoutRoot is the root grid where all page content is placed-->
-    
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+
     <Grid x:Name="LayoutRoot" Background="Transparent">
 
-       <Grid.RowDefinitions>
-            
+        <Grid.RowDefinitions>
+
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -39,24 +39,22 @@
             <TextBlock Text="Map View" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="#FF14DC6D" Height="49" FontSize="36"/>
         </StackPanel>
 
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,0,0">
 
-           
-            <maps:Map x:Name="mapWithMyLocation"  Center=" 6.929267,79.861156"  Margin="-13,-28,-15,0" ZoomLevel="10"  >
-                
-            </maps:Map>
+
+            <maps:Map x:Name="mapWithMyLocation"  Center=" 6.929267,79.861156"  Margin="-13,-28,0,0" ZoomLevel="10"  />
 
             <ToggleButton x:Name="toggleSockets" Content="SOCKETS" Margin="-13,611,303,0" Background="LightBlue"  Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="166"/>
-            <ToggleButton x:Name="toggleFast" Content="FAST" Margin="-13,564,303,47" Background="LightBlue" Unchecked="fastChargers_Unchecked" IsChecked="True" Checked="fastChargers_Checked"/>
-            <ToggleButton x:Name="toggleNormal" Content="NORMAL" Margin="-13,508,303,94" Background="LightBlue"  Checked="normalChargers_Checked" Unchecked="normalChargers_Unchecked" IsChecked="True"/>
+            <ToggleButton x:Name="toggleFast" Content="FAST" Margin="-13,564,303,47" Background="LightBlue" Unchecked="fastChargers_Unchecked" IsChecked="True" Checked="fastChargers_Checked" Width="166"/>
+            <ToggleButton x:Name="toggleNormal" Content="LEVEL 2" Margin="-13,508,303,85" Background="LightBlue"  Checked="normalChargers_Checked" Unchecked="normalChargers_Unchecked" IsChecked="True" Width="166" Height="70"/>
         </Grid>
-        
+
         <!--ContentPanel - place additional content here-->
 
     </Grid>
 
-    
-   
+
+
 </phone:PhoneApplicationPage>
     
     

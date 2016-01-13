@@ -44,7 +44,7 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Margin="12,133,2,28" Grid.RowSpan="2">
-            <Canvas HorizontalAlignment="Left" Height="767" VerticalAlignment="Top" Width="478" Margin="-12,-131,0,-29">
+            <Canvas Height="767" VerticalAlignment="Top" Margin="-14,-128,-10,-32">
                 <Canvas.Background>
                     <ImageBrush ImageSource = "/images/bg.png"/>
                 </Canvas.Background>

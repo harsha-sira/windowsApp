@@ -25,6 +25,7 @@ namespace ChargeNet_APP
     public partial class MainPage : PhoneApplicationPage
     {
         public static int num = 0;
+        public static bool flag =true;
         public static int warningFlagNoInternet = 0;
         public static String[,] array = new String[100, 7];
         bool isConnected = NetworkInterface.GetIsNetworkAvailable();
@@ -47,7 +48,7 @@ namespace ChargeNet_APP
 
                     if (item.workingStatus.Equals("FREE"))
                     {
-                        array[num, 1] = "FREE NORMAL";
+                        array[num, 1] = "FREE LEVEL2";
                     }
                     else if (item.workingStatus.Equals("FREE_L3"))
                     {
@@ -55,7 +56,7 @@ namespace ChargeNet_APP
                     }
                     else if (item.workingStatus.Equals("IN_PROGRESS"))
                     {
-                        array[num, 1] = "CHARGING NORMAL";
+                        array[num, 1] = "CHARGING LEVEL2";
                     }
                     else if (item.workingStatus.Equals("IN_PROGRESS_L3"))
                     {
@@ -97,13 +98,13 @@ namespace ChargeNet_APP
         {
 
             InitializeComponent();
-            Debug.WriteLine(isConnected);
+            
             if (!isConnected)
             {
               // MessageBox.Show("No internet connection is avaliable. Please connect to internet");
                
                 loadData();
-                
+                flag = false;
 
             }
             else
@@ -138,10 +139,10 @@ namespace ChargeNet_APP
                 {
                     if (item.chargerReference.Equals("F0001"))
                         continue;
-
+                        
                     if (item.workingStatus.Equals("FREE"))
                     {
-                        array[num, 1] = "FREE NORMAL";
+                        array[num, 1] = "FREE LEVEL2";
                     }
                     else if (item.workingStatus.Equals("FREE_L3"))
                     {
@@ -149,7 +150,7 @@ namespace ChargeNet_APP
                     }
                     else if (item.workingStatus.Equals("IN_PROGRESS"))
                     {
-                        array[num, 1] = "CHARGING NORMAL";
+                        array[num, 1] = "CHARGING LEVEL2";
                     }
                     else if (item.workingStatus.Equals("IN_PROGRESS_L3"))
                     {
@@ -158,7 +159,8 @@ namespace ChargeNet_APP
                     else if (item.workingStatus.Equals("NA"))
                     {
                         array[num, 1] = "SOCKETS";
-                    } 
+                    }
+
                     array[num, 0] = item.gpsLocation;
                     array[num, 2] = item.locationName;
                     array[num, 3] = item.longitude;

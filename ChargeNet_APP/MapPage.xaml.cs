@@ -45,7 +45,6 @@ namespace ChargeNet_APP
         int numberOfSuperChargers = 0;
         int numberOfNormalChargers = 0;
 
-        bool pushtapped = false;
         MapOverlay[] mapOverlay = new MapOverlay[100];
         MapLayer myLayer = new MapLayer();
         Pushpin p = new Pushpin();
@@ -60,14 +59,20 @@ namespace ChargeNet_APP
             {
                 MessageBox.Show("No internet connection is avaliable. Please connect to internet\nLoad the page again");
                 MainPage.warningFlagNoInternet++;
+                MainPage.flag = false;
               //  Application.Current.Terminate();
 
             }
-            else if(isConnected)
+            else if(isConnected && MainPage.flag==false)
             {
-                MainPage objectMainpage = new MainPage();
-                objectMainpage.loadjsonfrominternet();
-                objectMainpage = null;
+                MainPage.flag =true;
+                if (MainPage.flag)
+                {
+                    MainPage objectMainpage = new MainPage();
+                    objectMainpage.loadjsonfrominternet();
+                    objectMainpage = null;
+                }
+               
             }
 
             loadLocationOnMap();
@@ -106,7 +111,7 @@ namespace ChargeNet_APP
                 image.Width = 50;
                 image.Height = 50;
                 image.Opacity = 100;
-                if (MainPage.array[normalChargersNumArray[i], 1].Equals("FREE NORMAL"))
+                if (MainPage.array[normalChargersNumArray[i], 1].Equals("FREE LEVEL2"))
                 {
                     image.Source = new BitmapImage(imagefree);
                 }
@@ -130,6 +135,7 @@ namespace ChargeNet_APP
 
         public void showFastChargers()
         {
+            Debug.WriteLine("number" + numberOfSuperChargers);
             for (int i = 0; i < numberOfSuperChargers; i++)
             {
                 var image = new Image();
@@ -139,9 +145,7 @@ namespace ChargeNet_APP
                 if (MainPage.array[fastChargersNumArray[i], 1].Equals("FREE FAST"))
                 {
                     image.Source = new BitmapImage(imageSuperfree);
-                }
-                else
-                {
+                }else{
                     image.Source = new BitmapImage(imageSuperbusy);
                 }
 
@@ -167,8 +171,8 @@ namespace ChargeNet_APP
             for (int i = 0; i < numberOfLocations; i++)
             {
                 BitmapImage a;
-                
-                if (MainPage.array[i, 1].Equals("FREE NORMAL"))
+
+                if (MainPage.array[i, 1].Equals("FREE LEVEL2"))
                 {
                     normalChargersNumArray[numberOfNormalChargers++] = i;
                     continue;
@@ -182,7 +186,7 @@ namespace ChargeNet_APP
                     fastChargersNumArray[numberOfSuperChargers++] = i;
                     continue;
                 }
-                else if (MainPage.array[i, 1].Equals("CHARGING NORMAL"))
+                else if (MainPage.array[i, 1].Equals("CHARGING LEVEL2"))
                 {
                     normalChargersNumArray[numberOfNormalChargers++] = i;
                     continue;

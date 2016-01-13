@@ -30,14 +30,19 @@ namespace ChargeNet_APP
             {
                 MessageBox.Show("No internet connection is avaliable. Please connect to internet\nLoad the page again");
                 MainPage.warningFlagNoInternet++;
+                MainPage.flag = false;
                // Application.Current.Terminate();
 
             }
-            else if (isConnected)
+            else if (isConnected && MainPage.flag==false)
             {
-                MainPage objectMainpage = new MainPage();
-                objectMainpage.loadjsonfrominternet();
-                objectMainpage = null;
+                MainPage.flag = true;
+                if (MainPage.flag)
+                {
+                    MainPage objectMainpage = new MainPage();
+                    objectMainpage.loadjsonfrominternet();
+                    objectMainpage = null;
+                }
             }
 
             this.myAddressBook.ItemsSource = this.GetLocationGroups();
