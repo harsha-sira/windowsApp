@@ -42,6 +42,9 @@ namespace ChargeNet_APP
 
                 foreach (var item in items)
                 {
+                    if (item.chargerReference.Equals("F0001"))
+                        continue;
+
                     if (item.workingStatus.Equals("FREE"))
                     {
                         array[num, 1] = "FREE NORMAL";
@@ -133,6 +136,9 @@ namespace ChargeNet_APP
                 num = 0;
                 foreach (var item in list)
                 {
+                    if (item.chargerReference.Equals("F0001"))
+                        continue;
+
                     if (item.workingStatus.Equals("FREE"))
                     {
                         array[num, 1] = "FREE NORMAL";

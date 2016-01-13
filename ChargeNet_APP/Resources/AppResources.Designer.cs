@@ -104,15 +104,5 @@ namespace ChargeNet_APP.Resources {
                 return ResourceManager.GetString("ResourceLanguage", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] super_charger_free_marker_pin {
-            get {
-                object obj = ResourceManager.GetObject("super_charger_free_marker_pin", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

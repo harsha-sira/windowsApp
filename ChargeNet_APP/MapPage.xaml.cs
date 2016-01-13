@@ -106,7 +106,7 @@ namespace ChargeNet_APP
                 }
                 else if (MainPage.array[i, 1].Equals("CHARGING FAST"))
                 {
-                    a = new BitmapImage(imageSuperfree);
+                    a = new BitmapImage(imageSuperbusy);
                 }
                 else if (MainPage.array[i, 1].Equals("CHARGING NORMAL"))
                 {
