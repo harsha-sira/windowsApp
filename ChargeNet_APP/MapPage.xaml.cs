@@ -40,9 +40,9 @@ namespace ChargeNet_APP
         public MapPage()
         {
             InitializeComponent();
-            if (!isConnected && MainPage.warningFlagNoInternet!=1)
+            if (!isConnected && MainPage.warningFlagNoInternet!=2)
             {
-                MessageBox.Show("No internet connection is avaliable. Please connect to internet");
+                MessageBox.Show("No internet connection is avaliable. Please connect to internet\nLoad the page again");
                 MainPage.warningFlagNoInternet++;
               //  Application.Current.Terminate();
 

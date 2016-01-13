@@ -34,44 +34,58 @@ namespace ChargeNet_APP
         //offline data loading not working 
         public void loadData()
         {
+            try {
+                StreamReader sr = new StreamReader(new IsolatedStorageFileStream(filename, FileMode.Open, myIsolatedStorage));
+                string json = sr.ReadToEnd();
+                var items = JsonConvert.DeserializeObject<List<Location>>(json);
+                num = 0;
 
-            StreamReader sr = new StreamReader(new IsolatedStorageFileStream(filename, FileMode.Open, myIsolatedStorage));
-            string json = sr.ReadToEnd();
-            var items = JsonConvert.DeserializeObject<List<Location>>(json);
-            num = 0;
-
-            foreach (var item in items)
+                foreach (var item in items)
+                {
+                    if (item.workingStatus.Equals("FREE"))
+                    {
+                        array[num, 1] = "FREE NORMAL";
+                    }
+                    else if (item.workingStatus.Equals("FREE_L3"))
+                    {
+                        array[num, 1] = "FREE FAST";
+                    }
+                    else if (item.workingStatus.Equals("IN_PROGRESS"))
+                    {
+                        array[num, 1] = "CHARGING NORMAL";
+                    }
+                    else if (item.workingStatus.Equals("IN_PROGRESS_L3"))
+                    {
+                        array[num, 1] = "CHARGING FAST";
+                    }
+                    else if (item.workingStatus.Equals("NA"))
+                    {
+                        array[num, 1] = "SOCKETS";
+                    }
+                    array[num, 0] = item.gpsLocation;
+                    array[num, 2] = item.locationName;
+                    array[num, 3] = item.longitude;
+                    array[num, 4] = item.latitude;
+                    array[num, 5] = item.chargerReference;
+                    num++;
+                    Debug.WriteLine("cache" + item.chargerReference);
+                }
+                isJsonloaded = true;
+                if (isJsonloaded)
+                {
+                    mapBtn.Visibility = Visibility.Visible;
+                    LocationBtn.Visibility = Visibility.Visible;
+                    loadingText.Visibility = Visibility.Collapsed;
+                    progressbar.Visibility = Visibility.Collapsed;
+                }
+            }
+            catch (Exception e)
             {
-                //if (item.workingStatus.Equals("FREE"))
-                //{
-                //    array[num, 1] = "FREE NORMAL";
-                //}
-                //else if (item.workingStatus.Equals("FREE_L3"))
-                //{
-                //    array[num, 1] = "FREE FAST";
-                //}
-                //else if (item.workingStatus.Equals("IN_PROGRESS"))
-                //{
-                //    array[num, 1] = "CHARGING NORMAL";
-                //}
-                //else if (item.workingStatus.Equals("IN_PROGRESS_L3"))
-                //{
-                //    array[num, 1] = "CHARGING FAST";
-                //}
-                //else if (item.workingStatus.Equals("NA"))
-                //{
-                //    array[num, 1] = "SOCKETS";
-                //} 
-                array[num, 0] = item.workingStatus;
-                array[num, 0] = item.gpsLocation;
-                array[num, 2] = item.locationName;
-                array[num, 3] = item.longitude;
-                array[num, 4] = item.latitude;
-                array[num, 5] = item.chargerReference;
-                num++;
-                Debug.WriteLine("cache"+item.chargerReference);
+                MessageBox.Show("Error occured ! Please start the application");
+                Application.Current.Terminate();
             }
 
+           
 
             
         }
@@ -113,7 +127,7 @@ namespace ChargeNet_APP
                 //writing to offlinedata.txt for caching 
                 if(myIsolatedStorage.FileExists(filename)){
                     
-                       StreamWriter writeFile = new StreamWriter(new IsolatedStorageFileStream(filename, FileMode.OpenOrCreate, myIsolatedStorage));
+                       StreamWriter writeFile = new StreamWriter(new IsolatedStorageFileStream(filename, FileMode.Truncate, myIsolatedStorage));
                        writeFile.WriteLine(jsonCache);
                        writeFile.Close();
                 }
