@@ -47,6 +47,12 @@ namespace ChargeNet_APP
               //  Application.Current.Terminate();
 
             }
+            else if(isConnected)
+            {
+                MainPage objectMainpage = new MainPage();
+                objectMainpage.loadjsonfrominternet();
+                objectMainpage = null;
+            }
 
             loadLocationOnMap();
             ShowMyLocationOnTheMap();

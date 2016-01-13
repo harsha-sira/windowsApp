@@ -33,6 +33,12 @@ namespace ChargeNet_APP
                // Application.Current.Terminate();
 
             }
+            else if (isConnected)
+            {
+                MainPage objectMainpage = new MainPage();
+                objectMainpage.loadjsonfrominternet();
+                objectMainpage = null;
+            }
 
             this.myAddressBook.ItemsSource = this.GetLocationGroups();
         

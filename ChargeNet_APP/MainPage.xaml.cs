@@ -105,10 +105,7 @@ namespace ChargeNet_APP
             }
             else
             {
-                WebClient wc = new WebClient();
-                wc.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient_DownloadStringCompleted);
-                wc.DownloadStringAsync(new Uri("http://54.149.108.224/getActiveChargingPointLocations"));
-
+                loadjsonfrominternet();   
             }
 
 
@@ -181,6 +178,14 @@ namespace ChargeNet_APP
             }
 
            
+        }
+
+        public void loadjsonfrominternet()
+        {
+            WebClient wc = new WebClient();
+            wc.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient_DownloadStringCompleted);
+            wc.DownloadStringAsync(new Uri("http://54.149.108.224/getActiveChargingPointLocations"));
+
         }
 
         private void mapBtn_Click(object sender, RoutedEventArgs e)
