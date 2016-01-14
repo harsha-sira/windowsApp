@@ -71,7 +71,7 @@ namespace ChargeNet_APP
                 }
                 else
                 {
-                    imageIcon = new Uri(@"/Images/plug.png", UriKind.Relative);
+                    imageIcon = new Uri(@"", UriKind.Relative);
                 }
                  
                

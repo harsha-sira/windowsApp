@@ -27,7 +27,7 @@
         <!--Item Template-->
         <DataTemplate x:Key="citiesItemTemplate">
             <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding image}"  Height="50" Margin="0,0,10,0"/>
+                <Image Source="{Binding image}"  Height="80" Margin="0,0,10,0"/>
                 <StackPanel>
                     <TextBlock Text="{Binding locationName }" FontSize="26" />
                     <TextBlock Text="{Binding gpsLocation }" Style="{StaticResource PhoneTextSubtleStyle}"  />

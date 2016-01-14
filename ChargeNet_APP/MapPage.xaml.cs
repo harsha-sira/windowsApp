@@ -108,8 +108,8 @@ namespace ChargeNet_APP
             for (int i = 0; i < numberOfNormalChargers; i++)
             {
                 var image = new Image();
-                image.Width = 50;
-                image.Height = 50;
+                image.Width = 60;
+                image.Height = 60;
                 image.Opacity = 100;
                 if (MainPage.array[normalChargersNumArray[i], 1].Equals("FREE LEVEL2"))
                 {
@@ -139,8 +139,8 @@ namespace ChargeNet_APP
             for (int i = 0; i < numberOfSuperChargers; i++)
             {
                 var image = new Image();
-                image.Width = 50;
-                image.Height = 50;
+                image.Width = 70;
+                image.Height = 70;
                 image.Opacity = 100;
                 if (MainPage.array[fastChargersNumArray[i], 1].Equals("FREE FAST"))
                 {
