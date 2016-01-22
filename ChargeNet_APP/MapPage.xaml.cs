@@ -237,25 +237,29 @@ namespace ChargeNet_APP
         private async void ShowMyLocationOnTheMap()
         {
             Geolocator myGeolocator = new Geolocator();
-            Geoposition myGeoposition = await myGeolocator.GetGeopositionAsync();
-            Geocoordinate myGeocoordinate = myGeoposition.Coordinate;
-            GeoCoordinate myGeoCoordinate = CoordinateConverter.ConvertGeocoordinate(myGeocoordinate);
 
-            Ellipse myCircle = new Ellipse();
-            myCircle.Fill = new SolidColorBrush(Colors.Red);
-            myCircle.Height = 20;
-            myCircle.Width = 20;
-            myCircle.Opacity = 50;
+            if(myGeolocator.LocationStatus != PositionStatus.Disabled){
+                Geoposition myGeoposition = await myGeolocator.GetGeopositionAsync();
+                Geocoordinate myGeocoordinate = myGeoposition.Coordinate;
+                GeoCoordinate myGeoCoordinate = CoordinateConverter.ConvertGeocoordinate(myGeocoordinate);
+
+                Ellipse myCircle = new Ellipse();
+                myCircle.Fill = new SolidColorBrush(Colors.Red);
+                myCircle.Height = 20;
+                myCircle.Width = 20;
+                myCircle.Opacity = 50;
+
+                MapOverlay myLocationOverlay = new MapOverlay();
+                myLocationOverlay.Content = myCircle;
+                myLocationOverlay.PositionOrigin = new Point(0.5, 0.5);
+                myLocationOverlay.GeoCoordinate = myGeoCoordinate;
+
+                MapLayer myLocationLayer = new MapLayer();
+                myLocationLayer.Add(myLocationOverlay);
+
+                mapWithMyLocation.Layers.Add(myLocationLayer);
+            }
             
-            MapOverlay myLocationOverlay = new MapOverlay();
-            myLocationOverlay.Content = myCircle;
-            myLocationOverlay.PositionOrigin = new Point(0.5, 0.5);
-            myLocationOverlay.GeoCoordinate = myGeoCoordinate;
-
-            MapLayer myLocationLayer = new MapLayer();
-            myLocationLayer.Add(myLocationOverlay);
-
-            mapWithMyLocation.Layers.Add(myLocationLayer);
             
         }
 
